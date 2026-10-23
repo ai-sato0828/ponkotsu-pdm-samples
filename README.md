@@ -8,6 +8,7 @@
 
 | やりたいこと | サンプル | 対応記事 |
 | --- | --- | --- |
+| メソッド抽出とクラス分割を、保存回数まで保って比較する | [メソッドかクラスか](design/method-or-class/)・[サンプルZIP](downloads/method-or-class-sample.zip) | [Javaの処理をどこで分けるか](https://syachiku-uz.info/how-to-split/) |
 | 計算と表示を分け、変更するクラスを判断する | [Javaのクラス設計](java/class-design-basics/) | 公開準備中 |
 | JUnitで最初の3件を実行し、1件の失敗を直す | [JUnitの最初の実行](testing/junit-first-test/)・[サンプルZIP](downloads/junit-first-test-sample.zip) | JUnit 5入門（記事は2026年10月24日8:00公開予定） |
 | 仕様から入力・期待値を選び、境界をJUnitで確認する | [Javaのテスト入門](testing/java-testing-basics/) | 公開準備中 |
