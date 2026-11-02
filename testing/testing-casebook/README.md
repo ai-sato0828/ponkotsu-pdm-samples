@@ -37,7 +37,7 @@ mvn -Dtest=CsvSourceParsingTest test
 | A01 | START-01 | RECEIVED, 担当20, 操作20 | true, IN_PROGRESS | CaseDesignTest.A01_start |
 | A02 | START-02 | RECEIVED, 担当20, 操作10 | false, RECEIVED | CaseDesignTest.A02_start |
 | A03 | START-02 | RECEIVED, 担当20, 操作30 | false, RECEIVED | CaseDesignTest.A03_start |
-| A04 | START-02 | RECEIVED, 担当None, 操作20 | false, RECEIVED | CaseDesignTest.A04_start |
+| A04 | START-02 | RECEIVED, 担当null（未設定）, 操作20 | false, RECEIVED | CaseDesignTest.A04_start |
 | A05 | START-02 | DRAFT, 担当20, 操作20 | false, DRAFT | CaseDesignTest.A05_start |
 | A06 | START-02 | IN_PROGRESS, 担当20, 操作20 | false, IN_PROGRESS | CaseDesignTest.A06_start |
 | A07 | START-02 | COMPLETED, 担当20, 操作20 | false, COMPLETED | CaseDesignTest.A07_start |
