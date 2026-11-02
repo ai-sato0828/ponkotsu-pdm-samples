@@ -8,6 +8,7 @@
 
 | やりたいこと | サンプル | 対応記事 |
 | --- | --- | --- |
+| 仕様の20ケースを普通のテストとパラメータ化で比べ、CSVの値変換を確認する | [テストケース帳](testing/testing-casebook/)・[サンプルZIP](testing/testing-casebook/dist/testing-casebook.zip) | [ケースの作り方](https://syachiku-uz.info/how-to-create-test-cases-from-spec/)・[CsvSourceと境界値](https://syachiku-uz.info/junit-parameterizedtest-csvsource-boundary-values/) |
 | 形式違いとSMART補正を区別し、不正日付をSTRICTで拒否する | [日付変換と厳密解析](java/date-conversion-strict/)・[サンプルZIP](downloads/date-conversion-strict-sample.zip) | [LocalDate.parseの原因と対処](https://syachiku-uz.info/java-localdate-parse-datetimeparseexception/) |
 | Service分割前後で在庫・保存・通知・監査を保つ | [Service分割](spring/service-splitting/)・[サンプルZIP](downloads/service-splitting-sample.zip) | [Serviceクラスの分け方](https://syachiku-uz.info/java-service-class-splitting/) |
 | メソッド抽出とクラス分割を、保存回数まで保って比較する | [メソッドかクラスか](design/method-or-class/)・[サンプルZIP](downloads/method-or-class-sample.zip) | [Javaの処理をどこで分けるか](https://syachiku-uz.info/how-to-split/) |
