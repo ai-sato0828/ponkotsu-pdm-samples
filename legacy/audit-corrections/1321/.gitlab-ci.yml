@@ -1,0 +1,11 @@
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+stages:
+  - build
+
+build_job:
+  stage: build
+  script:
+    - sh ./build.sh
