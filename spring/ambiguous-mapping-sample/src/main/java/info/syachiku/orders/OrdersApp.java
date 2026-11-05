@@ -1,0 +1,11 @@
+package info.syachiku.orders;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication(proxyBeanMethods = false)
+public class OrdersApp {
+    public static void main(String[] args) {
+        SpringApplication.run(OrdersApp.class, args);
+    }
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="form-action 'none'">
+  <title>Java基礎ガイドの注文フォーム練習</title>
+  <style>
+form { max-width: 20rem; }
+label, input, button { display: block; }
+input, button {
+  width: 100%; box-sizing: border-box;
+  padding: 0.5rem;
+}
+button { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>注文フォームの練習</h1>
+    <p>個数を入力して「注文する」を押すと、送信予定の値をこのページで確認できます。注文は送信されません。</p>
+<form action="/orders" method="post">
+  <p>ノート：500円</p>
+  <input type="hidden" name="productId" value="1">
+  <label for="quantity">個数（1〜10個）</label>
+  <input id="quantity" name="quantity" type="number"
+         min="1" max="10" required>
+  <button type="submit">注文する</button>
+</form>
+    <p>送信予定の値<br>
+      <output id="planned-values" for="quantity" aria-live="polite" aria-atomic="true">個数を入力して「注文する」を押してください。</output>
+    </p>
+  </main>
+  <script>
+    const form = document.querySelector('form');
+    const plannedValues = document.querySelector('#planned-values');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      plannedValues.value = new URLSearchParams(data).toString();
+    });
+  </script>
+</body>
+</html>
