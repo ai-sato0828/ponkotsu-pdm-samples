@@ -1,0 +1,14 @@
+// NG: グローバル状態になり、初期化順やテストが不安定になる
+@Component
+public class OrderFinder {
+
+    private static OrderRepository repository;
+
+    public OrderFinder(OrderRepository repository) {
+        OrderFinder.repository = repository;
+    }
+
+    public static Order find(Long id) {
+        return repository.findById(id).orElseThrow();
+    }
+}
