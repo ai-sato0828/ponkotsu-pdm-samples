@@ -1,0 +1,158 @@
+{
+  "testClass": "info.syachiku.finallyreturn.FinallyExamplesTest",
+  "cases": [
+    {
+      "test": "F01_finallyReturn_overwritesTryValue",
+      "input": "tryでA、finallyでB",
+      "expected": "Bが返る"
+    },
+    {
+      "test": "F02_cleanup_runsBeforeCallerReceivesA",
+      "input": "tryでA、変更可能なevents",
+      "expected": "A、順序[cleanup,caller=A]"
+    },
+    {
+      "test": "F03_brokenOrder_savesButReturnsFalse",
+      "input": "保存成功のbroken",
+      "expected": "false、save1/saved1/audit1"
+    },
+    {
+      "test": "F04_fixedOrder_savesAndReturnsTrue",
+      "input": "保存成功のfixed",
+      "expected": "true、saved1/audit1"
+    },
+    {
+      "test": "F05_brokenOrder_swallowsSaveFailure",
+      "input": "保存失敗のbroken",
+      "expected": "false、例外は隠れsave1/saved0/audit1"
+    },
+    {
+      "test": "F06_fixedOrder_propagatesSameSaveFailure",
+      "input": "保存失敗のfixed",
+      "expected": "同一save例外が届きsaved0/audit1"
+    },
+    {
+      "test": "F07_brokenName_returnsGuestDespiteFailure",
+      "input": "DB例外のbroken",
+      "expected": "guest、audit1"
+    },
+    {
+      "test": "F08_fixedName_propagatesFailureToCaller",
+      "input": "DB例外のfixed",
+      "expected": "同一IllegalStateException DB connection failed、audit1"
+    },
+    {
+      "test": "F09_fixedName_returnsActualName",
+      "input": "名前Aliceのfixed",
+      "expected": "Alice、audit1"
+    },
+    {
+      "test": "F10_fixedName_rejectsRepositoryNullInsteadOfFallback",
+      "input": "Repository戻り値null",
+      "expected": "NPE repository returned null、audit1"
+    },
+    {
+      "test": "F11_brokenCatch_normalPathReturnsNine",
+      "input": "broken operation正常",
+      "expected": "9、caught0/audit1"
+    },
+    {
+      "test": "F12_brokenCatch_realFailureEntersCatchButReturnsNine",
+      "input": "broken operation失敗",
+      "expected": "9、caught1/audit1"
+    },
+    {
+      "test": "F13_fixedCatch_normalPathReturnsZero",
+      "input": "fixed operation正常",
+      "expected": "0、caught0/audit1"
+    },
+    {
+      "test": "F14_fixedCatch_failureReturnsOneAfterActualCatch",
+      "input": "fixed operation失敗",
+      "expected": "1、caught1/audit1"
+    },
+    {
+      "test": "F15_lock_isReleasedAfterSuccess",
+      "input": "ロック内更新正常",
+      "expected": "更新1、isLocked=false"
+    },
+    {
+      "test": "F16_lock_isReleasedAndSameFailurePropagates",
+      "input": "ロック内更新例外",
+      "expected": "同一例外、isLocked=false"
+    },
+    {
+      "test": "F17_resource_returnsLinesAndCallsCloseOnce",
+      "input": "read正常/close正常",
+      "expected": "[line1,line2]、closeCalls1"
+    },
+    {
+      "test": "F18_resource_readFailurePropagatesAndCloseRuns",
+      "input": "read失敗/close正常",
+      "expected": "同一read IOException、closeCalls1"
+    },
+    {
+      "test": "F19_resource_closeFailureReplacesNormalReturn",
+      "input": "read正常/close失敗",
+      "expected": "同一close IOException、suppressed0/closeCalls1"
+    },
+    {
+      "test": "F20_resource_bothFailuresKeepReadPrimaryAndSuppressClose",
+      "input": "read失敗/close失敗",
+      "expected": "readが主、closeをsuppressed1、closeCalls1"
+    },
+    {
+      "test": "F21_resource_emptyInputReturnsEmptyListNotNull",
+      "input": "空reader",
+      "expected": "非null空List、closeCalls1"
+    },
+    {
+      "test": "F22_path_readsRealUtf8File",
+      "input": "実UTF8一時ファイル",
+      "expected": "[一行目,二行目]"
+    },
+    {
+      "test": "F23_path_openFailureRemainsCheckedIOException",
+      "input": "存在しないPath",
+      "expected": "NoSuchFileException（checked IOException）"
+    },
+    {
+      "test": "F24_naiveCleanup_hidesImportFailure",
+      "input": "素朴なfinallyでimport/delete両失敗",
+      "expected": "deleteが主、suppressed0"
+    },
+    {
+      "test": "F25_preservingCleanup_keepsImportAndSuppressesDelete",
+      "input": "保持版でimport/delete両失敗",
+      "expected": "importが主、deleteをsuppressed1"
+    },
+    {
+      "test": "F26_preservingCleanup_onlyDeleteFailurePropagates",
+      "input": "保持版でimport正常/delete失敗",
+      "expected": "deleteが主、suppressed0"
+    },
+    {
+      "test": "F27_preservingCleanup_onlyImportFailurePropagatesAndDeleteRuns",
+      "input": "保持版でimport失敗/delete正常",
+      "expected": "importが主、delete呼出1、suppressed0"
+    },
+    {
+      "test": "F28_preservingCleanup_bothActionsRunOnSuccess",
+      "input": "保持版で両方正常",
+      "expected": "[import,delete]各1回"
+    },
+    {
+      "test": "F29_preservingCleanup_avoidsSelfSuppressionForSameException",
+      "input": "保持版で同一RuntimeExceptionを両方throw",
+      "expected": "同じ例外を維持、自己抑制なし"
+    },
+    {
+      "test": "F30_resource_rejectsNullInputs",
+      "input": "null Path/null reader",
+      "expected": "各NPE、null戻り値にしない"
+    }
+  ],
+  "expectedMainStdout": "quiz=B\nevents=[cleanup, caller=A]\norder broken result=false saved=1\norder fixed result=true saved=1\nname broken=guest\nname fixed=IllegalStateException: DB connection failed cleanupTotal=2\ncatch broken normal=9 failed=9 catchCalls=1\ncatch fixed normal=0 failed=1 catchCalls=1\nresource normal=[line1, line2] closeCalls=1\nresource both primary=read failed suppressed=[close failed] closeCalls=1\nimport naive primary=delete failed suppressed=[]\nimport preserved primary=import failed suppressed=[delete failed]\n",
+  "closeSemantics": "closeの呼出しとclose成功は別。read/close例外モデルとmanualRuntimeException方針を混ぜない。",
+  "nullContracts": "NameRepositoryの戻り値nullは違反としてNPE、readLines戻り値は空Listか非nullList、null入力拒否。"
+}
