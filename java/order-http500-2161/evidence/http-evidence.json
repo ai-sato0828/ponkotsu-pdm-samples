@@ -1,0 +1,237 @@
+{
+  "observedAtUtc": "2026-11-13T06:49:21.183415+00:00",
+  "bindAddress": "127.0.0.1",
+  "port": 61685,
+  "jdk": "17.0.8",
+  "boot": "3.5.16",
+  "database": "H2 in-memory; empty new JVM",
+  "notificationModel": "Local stub throws runtime exception with SocketTimeoutException cause; no external notification or socket timeout executed",
+  "initial": {
+    "method": "GET",
+    "url": "http://127.0.0.1:61685/api/orders/by-request/demo-never-submitted",
+    "status": 200,
+    "headers": {
+      "X-Request-Id": "44412466-476f-4e59-b781-aff5be33d979",
+      "Content-Type": "application/json",
+      "Transfer-Encoding": "chunked",
+      "Date": "Fri, 13 Nov 2026 06:49:20 GMT",
+      "Connection": "close"
+    },
+    "body": {
+      "sourceRequestId": "demo-never-submitted",
+      "count": 0,
+      "orders": []
+    }
+  },
+  "cases": [
+    {
+      "case": "success",
+      "requestId": "demo-order-ok",
+      "input": {
+        "item": "BOOK",
+        "failNotification": false
+      },
+      "beforeRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-ok",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "75946005-3708-45cf-a14b-c438537d7120",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:20 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-ok",
+          "count": 0,
+          "orders": []
+        }
+      },
+      "post": {
+        "method": "POST",
+        "url": "http://127.0.0.1:61685/api/orders/individual",
+        "status": 201,
+        "headers": {
+          "X-Request-Id": "demo-order-ok",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "orderId": "8e46c2c8-a30a-4c2c-b9c6-8473dcb57227",
+          "item": "BOOK",
+          "requestId": "demo-order-ok"
+        }
+      },
+      "afterRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-ok",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "2c4beedc-7e1a-40c5-87e2-d311937bf864",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-ok",
+          "count": 1,
+          "orders": [
+            {
+              "orderId": "8e46c2c8-a30a-4c2c-b9c6-8473dcb57227",
+              "item": "BOOK",
+              "requestId": "demo-order-ok"
+            }
+          ]
+        }
+      },
+      "expectedCount": 1,
+      "matchingLogHeader": [
+        "2026-11-13T15:49:21.061+09:00 INFO  requestId=demo-order-ok i.s.o.IndividualCommitOrderService - operation=createOrder boundary=repository saveReturned=true requestId=demo-order-ok",
+        "2026-11-13T15:49:21.061+09:00 INFO  requestId=demo-order-ok i.s.o.IndividualCommitOrderService - operation=createOrder result=success requestId=demo-order-ok"
+      ]
+    },
+    {
+      "case": "individual-failure",
+      "requestId": "demo-order-individual-fail",
+      "input": {
+        "item": "BOOK",
+        "failNotification": true
+      },
+      "beforeRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-individual-fail",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "93f80862-3504-41d2-bec4-9aadeaee1aeb",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-individual-fail",
+          "count": 0,
+          "orders": []
+        }
+      },
+      "post": {
+        "method": "POST",
+        "url": "http://127.0.0.1:61685/api/orders/individual",
+        "status": 500,
+        "headers": {
+          "X-Request-Id": "demo-order-individual-fail",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "status": 500,
+          "code": "INTERNAL_ERROR",
+          "message": "処理を完了できませんでした",
+          "requestId": "demo-order-individual-fail"
+        }
+      },
+      "afterRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-individual-fail",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "4510c9a6-aaa1-41b2-8d5e-ea45796070ef",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-individual-fail",
+          "count": 1,
+          "orders": [
+            {
+              "orderId": "c6498ea2-592d-4205-aaad-ae5db8c32558",
+              "item": "BOOK",
+              "requestId": "demo-order-individual-fail"
+            }
+          ]
+        }
+      },
+      "expectedCount": 1,
+      "matchingLogHeader": [
+        "2026-11-13T15:49:21.071+09:00 INFO  requestId=demo-order-individual-fail i.s.o.IndividualCommitOrderService - operation=createOrder boundary=repository saveReturned=true requestId=demo-order-individual-fail",
+        "2026-11-13T15:49:21.076+09:00 ERROR requestId=demo-order-individual-fail i.s.order500.ApiExceptionHandler - operation=createOrder result=failed path=/api/orders/individual requestId=demo-order-individual-fail"
+      ]
+    },
+    {
+      "case": "transactional-failure",
+      "requestId": "demo-order-transactional-fail",
+      "input": {
+        "item": "BOOK",
+        "failNotification": true
+      },
+      "beforeRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-transactional-fail",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "1a7a4734-43e2-4e67-8f94-27a836fa9e4e",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-transactional-fail",
+          "count": 0,
+          "orders": []
+        }
+      },
+      "post": {
+        "method": "POST",
+        "url": "http://127.0.0.1:61685/api/orders/transactional",
+        "status": 500,
+        "headers": {
+          "X-Request-Id": "demo-order-transactional-fail",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "status": 500,
+          "code": "INTERNAL_ERROR",
+          "message": "処理を完了できませんでした",
+          "requestId": "demo-order-transactional-fail"
+        }
+      },
+      "afterRead": {
+        "method": "GET",
+        "url": "http://127.0.0.1:61685/api/orders/by-request/demo-order-transactional-fail",
+        "status": 200,
+        "headers": {
+          "X-Request-Id": "f0103d24-5298-495e-872d-bcc87eb24368",
+          "Content-Type": "application/json",
+          "Transfer-Encoding": "chunked",
+          "Date": "Fri, 13 Nov 2026 06:49:21 GMT",
+          "Connection": "close"
+        },
+        "body": {
+          "sourceRequestId": "demo-order-transactional-fail",
+          "count": 0,
+          "orders": []
+        }
+      },
+      "expectedCount": 0,
+      "matchingLogHeader": [
+        "2026-11-13T15:49:21.091+09:00 INFO  requestId=demo-order-transactional-fail i.s.o.TransactionalOrderService - operation=createOrder boundary=service saveReturned=true commitNotYet=true requestId=demo-order-transactional-fail",
+        "2026-11-13T15:49:21.094+09:00 ERROR requestId=demo-order-transactional-fail i.s.order500.ApiExceptionHandler - operation=createOrder result=failed path=/api/orders/transactional requestId=demo-order-transactional-fail"
+      ]
+    }
+  ],
+  "applicationStopped": true,
+  "stopReturnCode": 143,
+  "matchingLog": "evidence/request-matching.log"
+}

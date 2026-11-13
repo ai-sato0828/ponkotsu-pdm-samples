@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS orders (
+    order_id VARCHAR(36) PRIMARY KEY,
+    item VARCHAR(64) NOT NULL,
+    request_id VARCHAR(64) NOT NULL
+);

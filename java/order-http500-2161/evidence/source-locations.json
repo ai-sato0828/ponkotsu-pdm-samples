@@ -1,0 +1,38 @@
+[
+  {
+    "path": "src/main/java/info/syachiku/order500/IndividualCommitOrderService.java",
+    "line": 21,
+    "sourceLine": "        notification.send(order, request.failNotification());",
+    "fileSha256": "cdbe931a382729dd54bbfc70c07ecffa5f97d2b27926777f04d13294cf27163f"
+  },
+  {
+    "path": "src/main/java/info/syachiku/order500/NotificationStub.java",
+    "line": 12,
+    "sourceLine": "            throw new IllegalStateException(\"local notification stub failed\",",
+    "fileSha256": "d7c9c2db01da13f9d88d58936453349f281a0d23b1503fa88a3c376678c1a3c6"
+  },
+  {
+    "path": "src/main/java/info/syachiku/order500/OrderController.java",
+    "line": 32,
+    "sourceLine": "                .body(individual.create(body, RequestIdFilter.current(request)));",
+    "fileSha256": "9f40f8936957fd4df63f48b7b71dcde60324cd990af9f7a79e29c74f20594bcd"
+  },
+  {
+    "path": "src/main/java/info/syachiku/order500/OrderController.java",
+    "line": 39,
+    "sourceLine": "                .body(transactional.create(body, RequestIdFilter.current(request)));",
+    "fileSha256": "9f40f8936957fd4df63f48b7b71dcde60324cd990af9f7a79e29c74f20594bcd"
+  },
+  {
+    "path": "src/main/java/info/syachiku/order500/RequestIdFilter.java",
+    "line": 30,
+    "sourceLine": "            chain.doFilter(request, response);",
+    "fileSha256": "8698c0052db49130df4ee80f9c0bcad1dfee6eea88e2618840d98fb6018a673a"
+  },
+  {
+    "path": "src/main/java/info/syachiku/order500/TransactionalOrderService.java",
+    "line": 23,
+    "sourceLine": "        notification.send(order, request.failNotification());",
+    "fileSha256": "4fbe164b8e75c449724517ba4ef66491189d2a44a69729c4b342ac880c402810"
+  }
+]
