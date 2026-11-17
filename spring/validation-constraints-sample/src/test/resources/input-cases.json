@@ -1,0 +1,9 @@
+[
+  {"id":"missing","label":"name欠落","body":{},"expected":{"not-null":400,"not-empty":400,"not-blank":400,"required-name":400}},
+  {"id":"null","label":"null","body":{"name":null},"expected":{"not-null":400,"not-empty":400,"not-blank":400,"required-name":400}},
+  {"id":"empty","label":"空文字","body":{"name":""},"expected":{"not-null":200,"not-empty":400,"not-blank":400,"required-name":400}},
+  {"id":"ascii-space","label":"半角空白 U+0020","body":{"name":" "},"expected":{"not-null":200,"not-empty":200,"not-blank":400,"required-name":400}},
+  {"id":"wide-space","label":"全角空白 U+3000","body":{"name":"\u3000"},"expected":{"not-null":200,"not-empty":200,"not-blank":200,"required-name":400}},
+  {"id":"nbsp","label":"NBSP U+00A0","body":{"name":"\u00A0"},"expected":{"not-null":200,"not-empty":200,"not-blank":200,"required-name":400}},
+  {"id":"valid","label":"文字あり","body":{"name":"山田"},"expected":{"not-null":200,"not-empty":200,"not-blank":200,"required-name":200}}
+]
