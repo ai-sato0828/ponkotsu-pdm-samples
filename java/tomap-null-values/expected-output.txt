@@ -1,0 +1,8 @@
+twoArguments=NullPointerException
+hashMapSupplier=NullPointerException
+filter={U001=田中}
+default={U001=田中, U002=未設定}
+preserve={U001=田中, U002=null}
+U002 present=true, value=null
+U999 present=false, value=null
+duplicateFirstNull=IllegalArgumentException
