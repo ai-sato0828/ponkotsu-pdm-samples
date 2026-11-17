@@ -1,0 +1,22 @@
+CREATE TABLE demo_page_shift (
+    id BIGINT PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL
+);
+INSERT INTO demo_page_shift VALUES
+    (101, TIMESTAMP '2026-11-01 00:00:00'),
+    (102, TIMESTAMP '2026-11-01 00:00:00'),
+    (103, TIMESTAMP '2026-11-01 00:00:00'),
+    (104, TIMESTAMP '2026-11-01 00:00:00');
+
+SELECT id FROM demo_page_shift
+ORDER BY created_at DESC, id DESC FETCH FIRST 2 ROWS ONLY;
+
+INSERT INTO demo_page_shift VALUES (105, TIMESTAMP '2026-11-01 00:00:00');
+
+SELECT id FROM demo_page_shift
+ORDER BY created_at DESC, id DESC OFFSET 2 ROWS FETCH NEXT 2 ROWS ONLY;
+
+SELECT id FROM demo_page_shift
+WHERE created_at < TIMESTAMP '2026-11-01 00:00:00'
+   OR (created_at = TIMESTAMP '2026-11-01 00:00:00' AND id < 103)
+ORDER BY created_at DESC, id DESC FETCH FIRST 2 ROWS ONLY;
