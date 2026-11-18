@@ -4,7 +4,7 @@ public final class FixedWidthDemo {
     private FixedWidthDemo() {}
 
     public static void main(String[] args) {
-        for (String input : new String[]{"AB1234", "AB12", "", "AB1234TAIL"}) {
+        for (String input : new String[]{"AB1234", "AB123", "", "AB1234TAIL"}) {
             String before;
             try {
                 before = FixedWidthCode.extractUnchecked(input);

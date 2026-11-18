@@ -27,7 +27,7 @@ ASCIIを使う例に限定しています。String.length/substringの位置はU
 
 ```text
 input="AB1234" before=1234 after=1234
-input="AB12" before=StringIndexOutOfBoundsException after=IllegalArgumentException: 取込コードは6文字以上が必要です: 実際=4
+input="AB123" before=StringIndexOutOfBoundsException after=IllegalArgumentException: 取込コードは6文字以上が必要です: 実際=5
 input="" before=StringIndexOutOfBoundsException after=IllegalArgumentException: 取込コードは6文字以上が必要です: 実際=0
 input="AB1234TAIL" before=1234 after=1234
 ```
@@ -39,8 +39,8 @@ BeforeでStringIndexOutOfBoundsExceptionとなったのはJDK17.0.8のこの実�
 |範囲|ケース数|確認|
 |---|---|---|
 |正常比較|3|AB1234、AB1234TAIL、ABwxyzを両版で同じ4文字へ|
-|Beforeの短い入力|2|AB12/空がsubstring内で範囲外|
-|Afterの短い入力|2|AB12/空を必要6文字・実際長付きで明示拒否|
+|Beforeの短い入力|2|AB123/空がsubstring内で範囲外|
+|Afterの短い入力|2|AB123/空を必要6文字・実際長付きで明示拒否|
 |null|1|両版ともNPE|
 |JDKの半開区間|4|substring(length,length)は空、end>length/逆順/負beginは範囲外|
 

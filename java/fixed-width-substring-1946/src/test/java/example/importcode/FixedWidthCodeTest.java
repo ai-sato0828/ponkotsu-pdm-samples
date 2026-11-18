@@ -16,7 +16,7 @@ class FixedWidthCodeTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = "AB12")
+    @ValueSource(strings = "AB123")
     @EmptySource
     void uncheckedVersionFailsInsideSubstringForShortInput(String input) {
         var failure = assertThrows(IndexOutOfBoundsException.class,
@@ -26,7 +26,7 @@ class FixedWidthCodeTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = "AB12")
+    @ValueSource(strings = "AB123")
     @EmptySource
     void correctedVersionRejectsShortInputWithTheRequiredAndActualLength(String input) {
         var failure = assertThrows(IllegalArgumentException.class,
