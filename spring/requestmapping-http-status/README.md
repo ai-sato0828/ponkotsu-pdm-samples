@@ -49,3 +49,23 @@ mvn -Dtest=ConditionSelectionTest test
 これはSpring Security・独自例外処理・他の候補メソッドを組み込まない、このControllerと採用版の結果です。すべてのヘッダー不一致が404になるという一般則ではありません。`X-Client`は分岐条件を練習する値であり、クライアントが送れるため認証・権限の証明には使いません。本文の送受信形式は独自ヘッダーへまとめず、`consumes`／`produces`で指定します。
 
 [ブログ記事](https://syachiku-uz.info/spring-mvcrequestmapping/)
+
+
+## 追加の4件：クラスのproducesをメソッドで上書きする
+
+```sh
+mvn -Dtest=ProducesOverrideTest test
+```
+
+`ProducesOverrideController`だけを独立したMockMvcへ登録します。クラスの`produces = application/json`を`GET /reports/default`は引き継ぎ、`GET /reports/export`はメソッドの`produces = text/plain`で上書きします。クラスとメソッドの値を足して2種類許可する例ではありません。
+
+| パス | Accept | 期待status | 応答 |
+|---|---|---:|---|
+| `/reports/default` | `application/json` | 200 | JSON `{"status":"ready"}` |
+| `/reports/default` | `text/plain` | 406 | `HttpMediaTypeNotAcceptableException` |
+| `/reports/export` | `text/plain` | 200 | `status=ready` |
+| `/reports/export` | `application/json` | 406 | `HttpMediaTypeNotAcceptableException` |
+
+成功時はContent-Typeと本文、406時はハンドラ未選択と例外型も検証します。テストは`PRODUCES path=... accept=... status=... contentType=... exception=...`の4行を出します（順序は固定しません）。`export`は固定文字列を返す観測用で、ファイル作成やDB保存はしません。Acceptを付けるHTTPクライアント側の条件と、応答のContent-Typeを混同しないでください。
+
+合計は既存14件＋既存params/headers9件＋今回4件＝27件です。既存の5Javaファイル・POM・LICENSEは固定版とbyte同一、READMEだけを追記しています。JDK17.0.8、Maven3.9.16、既存依存キャッシュを使ったオフライン実行を確認しています。空キャッシュからの初回依存取得は今回未確認です。サーバー・外部DB・外部APIは使いません。
