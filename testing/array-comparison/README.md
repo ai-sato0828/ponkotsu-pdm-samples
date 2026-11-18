@@ -45,3 +45,27 @@ AFTER mutated equalsExpected=true hashChanged=false setContains=true mapValue=st
 実行確認: JDK17.0.8 / Maven3.9.16 / JUnit5.12.2 / Surefire3.5.6。既存依存キャッシュを利用したオフライン実行です。空キャッシュからの初回依存取得、他JDK、外部DB/API/HTTPは未検証です。
 
 配布はPOM、旧ArrayComparisonTest、FileSignature、FileSignatureTest、FileSignatureDemo、README、MIT LICENSEを含みます。故障検出用の作業コピーは含めません。
+
+
+## double[]の測定計算は、許容する絶対差を決めて比べる
+
+```sh
+mvn -Dtest=DoubleMeasurementArrayTest test
+```
+
+測定した区間の長さをメートル（m）で合計する例です。`double`の`0.1 + 0.2`は、このJDK17実行で`0.30000000000000004`となり、リテラル`0.3`とdeltaなしで配列を比較すると不一致になります。測定・計算上許容できる絶対差を`1e-9`mと**この教材で定めた場合**、`assertArrayEquals(expectedMetres, actualMetres, DELTA_METRES)`はこの丸め差を許容します。
+
+`1e-9`はすべての測定に適用する推奨値ではありません。実際は単位・計測精度・要求から許容幅を決めます。この例は金額・会計の比較に使いません。NaN/Infinity・相対誤差・丸め方式は検証範囲外です。deltaなし比較がいつも失敗するという意味でもありません。
+
+追加の`src/test/java/DoubleMeasurementArrayTest.java`は4件です。
+
+| テスト | 入力と期待値 |
+|---|---|
+| exactComparisonRejectsAdditionRoundingDifference | expected0.3m / actual0.1+0.2m、deltaなしの不一致をassertThrowsで検証 |
+| chosenToleranceAcceptsAdditionRoundingDifference | 同じ入力を許容幅1e-9mで比較し成功 |
+| differenceBeyondChosenToleranceIsStillRejected | expected0.3m / actual0.31mは同じ許容幅では拒否 |
+| lengthMismatchIsRejectedEvenWithTolerance | expected1要素 / actual2要素は、先頭要素の丸め差を許しても拒否 |
+
+不一致のassertionをassertThrowsが捕まえるケースも、JUnitのテスト結果は成功です。値の差と配列の長さの差を同じ原因にしないでください。長さ不一致の例は先頭要素の差が許容幅内なので、要素数の違いを分離しています。
+
+合計は既存10件＋新4件＝14件。既存の全JavaとPOM/LICENSEはbyte保持、READMEへの追記とこのテスト追加だけです。元のFileSignatureDemoの4行出力もそのままです。実行はJDK17.0.8/Maven3.9.16/JUnit5.12.2、依存cacheを使いオフラインで確認します。空cache初回取得は未確認です。独立コピーでDELTA_METRESを0.02へ広げると0.31mの拒否テストが失敗し、復元で成功することも確認します。故障版を配布へ混ぜません。
